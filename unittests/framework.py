@@ -256,6 +256,7 @@ class AssemblyTest:
         """ Checks that when this function is called, we have not already assembled and run the test. """
         assert not self._has_executed, f"Test has already been assembled and run!"
         assert len(value) > 0, "Array to compare against has to contain at least one element."
+        assert isinstance(array, ArrayData), f"Input ({array}) was of the wrong type. Expected a t.array() return value"
         assert len(value) <= len(array), "Array to compare against must contain a smaller or equal amount of elements."
         expected = self.array(value).name
         actual = "la a2, " + self._lookup_array(array)
