@@ -47,8 +47,24 @@ void insertData(HashTable *table, void *key, void *data) {
   // HINT:
   // 1. Find the right hash bucket location with table->hashFunction.
   int index = table->hashFunction(key) % table->size;
-  // 2. Allocate a new hash bucket entry struct.
+  void *temp1 = data;
+  void *temp2 = data;
+
+  // printf("DATA-1:");
+  // while(*(char*)temp1 != '\0'){
+  //   printf("%c",*(char*)temp1++);
+  // }
+  // printf("\n");
+
   struct HashBucketEntry* temp = (struct HashBucketEntry *)(malloc(sizeof(struct HashBucketEntry)));
+
+  // printf("DATA-2:");
+  // while(*(char*)temp2 != '\0'){
+  //   printf("%c",*(char*)temp2++);
+  // }
+  // printf("\n");
+
+  // 2. Allocate a new hash bucket entry struct.
   temp->key = key;
   temp->data = data;
   // 3. Append to the linked list or create it if it does not yet exist. 
@@ -87,7 +103,7 @@ unsigned int stringHash(void *s) {
   unsigned int ans = 0;
   unsigned int ch;
   while(ch = *(char*)(s++)){
-    ans = ans * 131 + ch;
+      ans = ans * 31 + ch;
   }
   return ans;
 }
