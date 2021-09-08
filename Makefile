@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g -Wall -std=c99 -c
 LDFLAGS = -g -Wall
-CUNIT = -L/home/ff/cs61c/cunit/install/lib -I/home/ff/cs61c/cunit/install/include -lcunit
+CUNIT =  -lcunit
 BUILD_DIR = ./build
 
 # A phony target is one that is not really the name of a file;

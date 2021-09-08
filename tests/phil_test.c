@@ -43,12 +43,13 @@ void test_InsertGet() {
     char *tval = "out";
     insertData(dictionary, (void*)tkey, (void*)tval);
     CU_ASSERT((void*)tval == findData(dictionary, (void*)tkey));
-
+    
     char *tkey1 = "inner";
     char *tval1 = "outer";
     insertData(dictionary, (void*)tkey1, (void*)tval1);
     CU_ASSERT((void*)tval1 == findData(dictionary, (void*)tkey1));
     CU_ASSERT(NULL == findData(dictionary, (void*)tval));
+    printf("IININININI");
 }
 
 // Non-existent key should return NULL
