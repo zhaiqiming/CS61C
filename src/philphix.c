@@ -81,7 +81,7 @@ void readDictionary(char *dictName) {
       insertData(dictionary, key, value);
     }
   }
-
+  close(fp);
 }
 
 /* Task 4 */
@@ -136,4 +136,5 @@ void processInput() {
       printf("%s%c", word, ch);
       memset(word, 0 ,sizeof(word));
   }
+  free(word);
 }
