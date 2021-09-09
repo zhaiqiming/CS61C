@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 /* Task 3 */
 void readDictionary(char *dictName) {
   // -- TODO --
-  const int length = 10000;
+  const int length = 1000000;
   FILE *fp = fopen(dictName, "r");
   while(1){
     char* key = (char*) malloc(sizeof(char) * length);
@@ -88,53 +88,57 @@ void readDictionary(char *dictName) {
 void processInput() {
   // -- TODO --
   // fprintf(stderr, "You need to implement processInput\n");
-  const int length = 100000;
+  const int length = 1000000;
   char* word = (char*) malloc(sizeof(char) * length);
   char ch;
   int pos = 0;
-  while((ch = getchar()) != EOF){
+  while((ch = getchar()) != EOF || strlen(word) != 0){
+
       if(isalpha(ch) || isdigit(ch)){
         *(word + pos++) = ch;
-        // printf("%c",ch);
         continue;
       }
       *(word + pos) = '\0';
       pos = 0;
-      // printf("first! : %s\n", word);
-      char* res;
+      char* str = (char*) malloc(sizeof(char) * length);
+      strcpy(str, word);
+
       //The exact word
+      char* res;
       res = (char*)findData(dictionary, word);
       if(res != NULL) {
-        printf("%s%c", res, ch);
-        memset(word, 0 ,sizeof(word));
+        output(res, ch, word, str);
         continue;
       }
 
-      int i = 0; 
-
       //The word with every alphabetical character except the first character converted to lowercase
-      i = 1;
+      int i = 1; 
       for( ;i < strlen(word); i++){
         *(word + i) = tolower(*(word + i));
       }
       res = (char*)findData(dictionary, word);
       if(res != NULL) {
-        printf("%s%c", res, ch);
-        memset(word, 0 ,sizeof(word));
+        output(res, ch, word, str);
         continue;
       }
 
       //Every alphabetical character of the word converted to lowercase
-      *(word + i) = tolower(*(word + i));
+      *(word) = tolower(*(word));
       res = (char*)findData(dictionary, word);
       if(res != NULL) {
-        printf("%s%c", res, ch);
-        memset(word, 0 ,sizeof(word));
+        output(res, ch, word, str);
         continue;
       }   
 
-      printf("%s%c", word, ch);
-      memset(word, 0 ,sizeof(word));
+      //cant match
+      output(str, ch, word, str);
   }
   free(word);
+}
+
+void output(char* res, char ch, char* word, char* str){
+    printf("%s", res);
+    if(ch != EOF) printf("%c", ch);
+    memset(word, 0 ,sizeof(word));
+    free(str);
 }

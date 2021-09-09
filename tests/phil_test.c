@@ -49,7 +49,6 @@ void test_InsertGet() {
     insertData(dictionary, (void*)tkey1, (void*)tval1);
     CU_ASSERT((void*)tval1 == findData(dictionary, (void*)tkey1));
     CU_ASSERT(NULL == findData(dictionary, (void*)tval));
-    printf("IININININI");
 }
 
 // Non-existent key should return NULL
