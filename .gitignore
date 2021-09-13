@@ -1,8 +1,3 @@
-philphix
-testOutput
-unittest
-tests/*/*.out
-
 # Prerequisites
 *.d
 
@@ -36,6 +31,7 @@ tests/*/*.out
 # Executables
 *.exe
 # *.out
+a.out
 *.app
 *.i*86
 *.x86_64
@@ -46,7 +42,6 @@ tests/*/*.out
 *.su
 *.idb
 *.pdb
-a.out
 vgcore.*
 
 # Kernel Module Compile Results
@@ -253,7 +248,3 @@ $RECYCLE.BIN/
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
-# lab13 program
-server_basic server_process
-**/*._sobel.bmp
