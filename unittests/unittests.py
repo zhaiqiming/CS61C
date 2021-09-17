@@ -186,25 +186,60 @@ class TestMatmul(TestCase):
         array_out = t.array([0] * len(result))
 
         # load address of input matrices and set their dimensions
-        raise NotImplementedError("TODO")
-        # TODO
+        t.input_array("a0", array0)
+        t.input_scalar("a1", int(m0_rows))
+        t.input_scalar("a2", int(m0_cols))
+        t.input_array("a3", array1)
+        t.input_scalar("a4", m1_rows)
+        t.input_scalar("a5", m1_cols)
         # load address of output array
-        # TODO
+        t.input_array("a6", array_out)
 
         # call the matmul function
         t.call("matmul")
 
         # check the content of the output array
-        # TODO
+        t.check_array(array_out, result)
 
         # generate the assembly file and run it through venus, we expect the simulation to exit with code `code`
         t.execute(code=code)
 
+    def test_exit_34(self):
+        self.do_matmul(
+            [1, 2, 3, 4], 2, 2,
+            [1, 2, 3, 4], -2, 2,
+            [30, 36, 42, 66],
+            34
+        )
     def test_simple(self):
         self.do_matmul(
-            [1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 3,
-            [1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 3,
-            [30, 36, 42, 66, 81, 96, 102, 126, 150]
+            [1, 2, 3, 4], 2, 2,
+            [1, 2, 3, 4], 2, 2,
+            [7, 10, 15, 22],
+        )
+    def test_2_3_3_2(self):
+        self.do_matmul(
+            [1, 2, 3, 4, 5, 6], 2, 3,
+            [7, 8, 9, 10, 11, 12], 3, 2,
+            [58, 64, 139, 154],
+        )
+    def test_3_1_1_2(self):
+        self.do_matmul(
+            [1, 2, 3], 3, 1,
+            [4, 4], 1, 2,
+            [4, 4, 8, 8, 12, 12],
+        )
+    def test_1_1_1_1(self):
+        self.do_matmul(
+            [2], 1, 1,
+            [3], 1, 1,
+            [6],
+        )
+    def test_exit_34(self):
+        self.do_matmul(
+            [2], -1, 1,
+            [3], 1, -1,
+            [6], 34
         )
 
     @classmethod

@@ -26,6 +26,9 @@ dot:
     #init
     add t0, x0, x0 #ans
     add t1, x0, x0 #index
+
+    slli a3, a3, 2
+    slli a4, a4, 2
     
 loop_start:
     beq t1, a2, loop_end
@@ -36,8 +39,8 @@ loop_start:
     mul t4, t2, t3
     add t0, t0, t4
 
-    addi a0, a0, 4
-    addi a1, a1, 4
+    add a0, a0, a3
+    add a1, a1, a4
     addi t1, t1, 1
 
     j loop_start
