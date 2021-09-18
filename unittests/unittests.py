@@ -242,6 +242,28 @@ class TestMatmul(TestCase):
             [6], 34
         )
 
+    def test_simple_new(self):
+        self.do_matmul(
+            [1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 3,
+            [1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 3,
+            [30, 36, 42, 66, 81, 96, 102, 126, 150]
+        )
+
+    def test_complex(self):
+        self.do_matmul(
+            [2, 5, 45, 4, 410, 41, 86, 845, 85, 0, 42, 445], 3, 4,
+            [2, 86, 90, 56, 33, 54, 5, 44, 4, 47, 50, 12, 6, 18, 12, 10, 45, 15, 20, 51], 4, 5,
+            [2564,917,730,1022,1045,15784,74522,51895,41572,59584,6720,27839,14577,14416,26004],
+        )
+
+    def test_mistmatch_matrix_34(self):
+        self.do_matmul(
+            [1, 2, 3, 4, 5, 6, 7, 8, 9], 3, 3,
+            [1, 2, 3], 1, 3,
+            [1],
+            34
+        )
+
     @classmethod
     def tearDownClass(cls):
         print_coverage("matmul.s", verbose=False)
@@ -349,15 +371,18 @@ class TestClassify(TestCase):
         ref_file = "outputs/test_basic_main/reference0.bin"
         args = ["inputs/simple0/bin/m0.bin", "inputs/simple0/bin/m1.bin",
                 "inputs/simple0/bin/inputs/input0.bin", out_file]
+        # insert a2 
+        t.input_scalar("a2", 0)
         # call classify function
         t.call("classify")
         # generate assembly and pass program arguments directly to venus
         t.execute(args=args)
-
         # compare the output file and
-        raise NotImplementedError("TODO")
-        # TODO
+        t.check_file_output(out_file, ref_file)
         # compare the classification output with `check_stdout`
+        t.check_stdout('2')
+
+
 
     @classmethod
     def tearDownClass(cls):
