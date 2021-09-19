@@ -55,7 +55,7 @@ main:
 # FIXME Fix the reported error in this function (you can delete lines
 # if necessary, as long as the function still returns 1 in a0).
 simple_fn:
-    mv a0, t0
+    # mv a0, t0
     li a0, 1
     ret
 
@@ -77,14 +77,14 @@ simple_fn:
 naive_pow:
     # BEGIN PROLOGUE
     # END PROLOGUE
-    li s0, 1
+    li t0, 1
 naive_pow_loop:
     beq a1, zero, naive_pow_end
-    mul s0, s0, a0
+    mul t0, t0, a0
     addi a1, a1, -1
     j naive_pow_loop
 naive_pow_end:
-    mv a0, s0
+    mv a0, t0
     # BEGIN EPILOGUE
     # END EPILOGUE
     ret
@@ -103,20 +103,24 @@ inc_arr:
     addi sp, sp, -4
     sw ra, 0(sp)
     # END PROLOGUE
-    mv s0, a0 # Copy start of array to saved register
-    mv s1, a1 # Copy length of array to saved register
+    mv t3, a0 # Copy start of array to saved register
+    mv t4, a1 # Copy length of array to saved register
     li t0, 0 # Initialize counter to 0
 inc_arr_loop:
-    beq t0, s1, inc_arr_end
+    beq t0, t4, inc_arr_end
     slli t1, t0, 2 # Convert array index to byte offset
-    add a0, s0, t1 # Add offset to start of array
+    add a0, t3, t1 # Add offset to start of array
     # Prepare to call helper_fn
     #
     # FIXME Add code to preserve the value in t0 before we call helper_fn
     # Hint: What does the "t" in "t0" stand for?
     # Also ask yourself this: why don't we need to preserve t1?
     #
+    addi sp, sp, -4
+    sw t0, 0(sp)
     jal helper_fn
+    lw t0, 0(sp)
+    addi sp, sp, 4
     # Finished call for helper_fn
     addi t0, t0, 1 # Increment counter
     j inc_arr_loop
@@ -139,8 +143,8 @@ helper_fn:
     # BEGIN PROLOGUE
     # END PROLOGUE
     lw t1, 0(a0)
-    addi s0, t1, 1
-    sw s0, 0(a0)
+    addi t0, t1, 1
+    sw t0, 0(a0)
     # BEGIN EPILOGUE
     # END EPILOGUE
     ret
